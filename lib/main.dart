@@ -4,12 +4,14 @@ import 'package:portifolio/src/cubit/theme_cubit.dart';
 import 'package:portifolio/src/cubit/theme_icon_cubit.dart';
 import 'package:portifolio/src/pages/home_page.dart';
 
+import 'package:portifolio/src/pages/intro_page.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  ThemeCubit cubit = ThemeCubit();
+  final ThemeCubit cubit = ThemeCubit();
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +23,14 @@ class MyApp extends StatelessWidget {
       child: BlocBuilder<ThemeCubit, ThemeData>(
         builder: (context, state) {
           return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
-              // themeMode: ThemeMode.dark,
-              theme: state,
-              darkTheme: ThemeData.dark(),
-              home: MyHomePage(title: 'Flutter Demo Home Page'));
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            // themeMode: ThemeMode.dark,
+            theme: state,
+            darkTheme: ThemeData.dark(),
+            // home: MyHomePage(title: 'Flutter Demo Home Page'),
+            home: IntroPage(),
+          );
         },
       ),
     );
