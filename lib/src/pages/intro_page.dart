@@ -15,8 +15,12 @@ class IntroPage extends StatefulWidget {
 }
 
 class _IntroPageState extends State<IntroPage> {
-  TextAnimationCubit textCubit = TextAnimationCubit();
-  late AnimationController animationController;
+  TextAnimationCubit homeTextCubit = TextAnimationCubit();
+  TextAnimationCubit aboutTextCubit = TextAnimationCubit();
+  TextAnimationCubit resumeTextCubit = TextAnimationCubit();
+  TextAnimationCubit servicesTextCubit = TextAnimationCubit();
+  TextAnimationCubit portfolioTextCubit = TextAnimationCubit();
+  TextAnimationCubit contactTextCubit = TextAnimationCubit();
 
   @override
   Widget build(BuildContext context) {
@@ -25,114 +29,169 @@ class _IntroPageState extends State<IntroPage> {
         return SingleChildScrollView(
           child: SizedBox(
             height: max(constraints.maxHeight, 200),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Adriano Anadinho',
-                      style: Theme.of(context).textTheme.headline3,
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Brazillian developer ',
-                      style: Theme.of(context).textTheme.headline5,
+            child: Padding(
+              padding: EdgeInsets.all(MediaQuery.of(context).size.width / 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Adriano Anadinho',
+                          // style: Theme.of(context).textTheme.headline3,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .headline3
+                                  ?.fontSize),
+                        )
+                      ],
                     ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    TextButton(
-                      style: TextButton.styleFrom(backgroundColor: Colors.red),
-                      onPressed: () {},
-                      child: Container(
-                        child: Text(
-                          'Home',
-                          style:
-                              TextStyle(decoration: TextDecoration.underline),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Brazillian developer ',
+                          style: Theme.of(context).textTheme.headline5,
                         ),
-                        decoration: BoxDecoration(),
-                      ),
+                      ],
                     ),
-                    MouseRegion(
-                      onExit: (event) => textCubit.deactivateAnimation(),
-                      // cursor: MouseCursor.uncontrolled,
-                      onHover: (event) => textCubit.activateAnimation(),
-                      child: BlocBuilder<TextAnimationCubit, bool>(
-                        bloc: textCubit,
-                        builder: (context, state) {
-                          return Text(
-                            'About',
-                            style: TextStyle(
-                              color: state
-                                  ? Theme.of(context).colorScheme.secondary
-                                  : Theme.of(context).colorScheme.primary,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width / 5,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () => print('go home man'),
+                            child: UnderlineAnimation(
+                              textCubit: homeTextCubit,
+                              text: 'Home',
+                              color: Colors.red,
+                              duration: Duration(milliseconds: 200),
+                              maxWidth: 30,
+                              minWidth: 30,
                             ),
-                          );
-                          // AnimatedTextKit(
-                          //     totalRepeatCount: 1,
-                          //     // isRepeatingAnimation: state,
-                          //     repeatForever: state,
-                          //     pause: Duration.zero,
-                          //     onTap: () => print(state),
-                          //     animatedTexts: [
-                          //       ColorizeAnimatedText(
-                          //         speed: Duration(milliseconds: 500),
-                          //         'About',
-                          //         textStyle: TextStyle(fontSize: 16),
-                          //         colors: [
-                          //           Colors.white,
-                          //           Colors.red,
-                          //           Colors.purple,
-                          //           Colors.blue
-                          //         ],
-                          //       )
-                          //     ]);
-                        },
+                          ),
+                          UnderlineAnimation(
+                            textCubit: aboutTextCubit,
+                            text: 'About',
+                            color: Colors.red,
+                            duration: Duration(milliseconds: 200),
+                            maxWidth: 30,
+                          ),
+                          UnderlineAnimation(
+                            textCubit: resumeTextCubit,
+                            text: 'Resume',
+                            color: Colors.red,
+                            duration: Duration(milliseconds: 200),
+                            maxWidth: 30,
+                          ),
+                          UnderlineAnimation(
+                            textCubit: servicesTextCubit,
+                            text: 'Services',
+                            color: Colors.red,
+                            duration: Duration(milliseconds: 200),
+                            maxWidth: 30,
+                          ),
+                          UnderlineAnimation(
+                            textCubit: portfolioTextCubit,
+                            text: 'Portfolio',
+                            color: Colors.red,
+                            duration: Duration(milliseconds: 200),
+                            maxWidth: 30,
+                          ),
+                          UnderlineAnimation(
+                            textCubit: contactTextCubit,
+                            text: 'Contact',
+                            color: Colors.red,
+                            duration: Duration(milliseconds: 200),
+                            maxWidth: 30,
+                          ),
+                        ],
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text('Resume'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: const [
+                        Icon(FontAwesomeIcons.discord),
+                        Icon(FontAwesomeIcons.reddit),
+                        Icon(FontAwesomeIcons.whatsapp),
+                        Icon(FontAwesomeIcons.github)
+                      ],
                     ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text('Services'),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text('Portifolio'),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text('Contact'),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [
-                    Icon(FontAwesomeIcons.discord),
-                    Icon(FontAwesomeIcons.reddit),
-                    Icon(FontAwesomeIcons.whatsapp),
-                    Icon(FontAwesomeIcons.github)
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
         );
       }),
     );
   }
+}
+
+class UnderlineAnimation extends StatelessWidget {
+  const UnderlineAnimation({
+    Key? key,
+    required this.textCubit,
+    required this.text,
+    required this.duration,
+    required this.maxWidth,
+    this.minWidth,
+    required this.color,
+  }) : super(key: key);
+
+  final TextAnimationCubit textCubit;
+  final String text;
+  final Duration duration;
+  final double maxWidth;
+  final double? minWidth;
+  final Color color;
 
   @override
-  Ticker createTicker(TickerCallback onTick) {
-    // TODO: implement createTicker
-    throw UnimplementedError();
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onExit: (event) => textCubit.deactivateAnimation(),
+      onHover: (event) => textCubit.activateAnimation(),
+      child: BlocBuilder<TextAnimationCubit, bool>(
+        bloc: textCubit,
+        builder: (context, state) {
+          return Stack(
+            children: [
+              AnimatedContainer(
+                width: state ? maxWidth : (minWidth ?? 0),
+                duration: duration,
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: color, width: 2),
+                  ),
+                ),
+                child: Text(''),
+              ),
+              Text(
+                text,
+                style: TextStyle(
+                  color: state
+                      ? Theme.of(context).colorScheme.secondary
+                      : Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }

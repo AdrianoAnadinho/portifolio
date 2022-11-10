@@ -13,6 +13,6 @@ class TextAnimationCubit extends Cubit<bool> {
 
   deactivateAnimation() {
     emit(false);
-    print(state);
+    // print(state);
   }
 }
