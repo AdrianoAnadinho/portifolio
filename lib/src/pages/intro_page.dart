@@ -228,11 +228,17 @@ class _IntroPageState extends State<IntroPage>
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              children: const [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      right: 16, bottom: 8, top: 8),
-                                  child: Icon(FontAwesomeIcons.discord),
+                              children: [
+                                IconButton(
+                                  alignment: Alignment.centerLeft,
+                                  highlightColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    FontAwesomeIcons.discord,
+                                  ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.all(8.0),
