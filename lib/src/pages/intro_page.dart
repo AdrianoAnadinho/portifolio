@@ -6,6 +6,7 @@ import 'package:flutter/src/scheduler/ticker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portifolio/src/cubit/text_animation_cubit.dart';
+import 'package:portifolio/src/pages/home_page.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
@@ -14,7 +15,8 @@ class IntroPage extends StatefulWidget {
   State<IntroPage> createState() => _IntroPageState();
 }
 
-class _IntroPageState extends State<IntroPage> {
+class _IntroPageState extends State<IntroPage>
+    with SingleTickerProviderStateMixin {
   TextAnimationCubit homeTextCubit = TextAnimationCubit();
   TextAnimationCubit aboutTextCubit = TextAnimationCubit();
   TextAnimationCubit resumeTextCubit = TextAnimationCubit();
@@ -22,122 +24,210 @@ class _IntroPageState extends State<IntroPage> {
   TextAnimationCubit portfolioTextCubit = TextAnimationCubit();
   TextAnimationCubit contactTextCubit = TextAnimationCubit();
 
+  late TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: LayoutBuilder(builder: (context, constraints) {
-        return SingleChildScrollView(
-          child: SizedBox(
-            height: max(constraints.maxHeight, 200),
-            child: Padding(
-              padding: EdgeInsets.all(MediaQuery.of(context).size.width / 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Adriano Anadinho',
-                          // style: Theme.of(context).textTheme.headline3,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .headline3
-                                  ?.fontSize),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Brazillian developer ',
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 5,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () => print('go home man'),
-                            child: UnderlineAnimation(
-                              textCubit: homeTextCubit,
-                              text: 'Home',
-                              color: Colors.red,
-                              duration: Duration(milliseconds: 200),
-                              maxWidth: 30,
-                              minWidth: 30,
-                            ),
-                          ),
-                          UnderlineAnimation(
-                            textCubit: aboutTextCubit,
-                            text: 'About',
-                            color: Colors.red,
-                            duration: Duration(milliseconds: 200),
-                            maxWidth: 30,
-                          ),
-                          UnderlineAnimation(
-                            textCubit: resumeTextCubit,
-                            text: 'Resume',
-                            color: Colors.red,
-                            duration: Duration(milliseconds: 200),
-                            maxWidth: 30,
-                          ),
-                          UnderlineAnimation(
-                            textCubit: servicesTextCubit,
-                            text: 'Services',
-                            color: Colors.red,
-                            duration: Duration(milliseconds: 200),
-                            maxWidth: 30,
-                          ),
-                          UnderlineAnimation(
-                            textCubit: portfolioTextCubit,
-                            text: 'Portfolio',
-                            color: Colors.red,
-                            duration: Duration(milliseconds: 200),
-                            maxWidth: 30,
-                          ),
-                          UnderlineAnimation(
-                            textCubit: contactTextCubit,
-                            text: 'Contact',
-                            color: Colors.red,
-                            duration: Duration(milliseconds: 200),
-                            maxWidth: 30,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
-                        Icon(FontAwesomeIcons.discord),
-                        Icon(FontAwesomeIcons.reddit),
-                        Icon(FontAwesomeIcons.whatsapp),
-                        Icon(FontAwesomeIcons.github)
-                      ],
-                    ),
-                  ),
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage('assets/images/3211663.jpg'),
+        ),
+      ),
+      child: Scaffold(
+        appBar: true
+            ? TabBar(
+                indicator: BoxDecoration(color: Colors.transparent),
+                indicatorColor: Colors.transparent,
+                labelColor: Colors.transparent,
+                overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                    (Set<MaterialState> states) {
+                  return Colors.transparent;
+                }),
+                tabs: [
+                  Tab(
+                    child: Text(''),
+                  )
                 ],
+                controller: tabController,
+              )
+            : PreferredSize(child: Container(), preferredSize: Size.zero),
+        // AppBar(
+        //   actions: [Icon(Icons.lock_clock)],
+        //   backgroundColor: Colors.transparent,
+        //   elevation: 0,
+        // ) ,
+        backgroundColor: Colors.transparent,
+        body: LayoutBuilder(builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: SizedBox(
+              height: max(constraints.maxHeight, 200),
+              child: Padding(
+                padding: EdgeInsets.all(MediaQuery.of(context).size.width / 10),
+                child: TabBarView(controller: tabController, children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Adriano Anadinho',
+                                style: TextStyle(
+                                    overflow: TextOverflow.fade,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .headline2
+                                        ?.fontSize),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Brazillian developer ',
+                                style: Theme.of(context).textTheme.headline5,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 24),
+                                    child: GestureDetector(
+                                      onTap: () => print('go home man'),
+                                      child: UnderlineAnimation(
+                                        textCubit: homeTextCubit,
+                                        text: 'Home',
+                                        color: Colors.red,
+                                        duration: Duration(milliseconds: 200),
+                                        maxWidth: 30,
+                                        minWidth: 30,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 24),
+                                    child: GestureDetector(
+                                      onTap: () => {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MyHomePage(title: 'app'),
+                                            ))
+                                      },
+                                      child: UnderlineAnimation(
+                                        textCubit: aboutTextCubit,
+                                        text: 'About',
+                                        color: Colors.red,
+                                        duration: Duration(milliseconds: 200),
+                                        maxWidth: 30,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 24),
+                                    child: UnderlineAnimation(
+                                      textCubit: resumeTextCubit,
+                                      text: 'Resume',
+                                      color: Colors.red,
+                                      duration: Duration(milliseconds: 200),
+                                      maxWidth: 30,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 24),
+                                    child: UnderlineAnimation(
+                                      textCubit: servicesTextCubit,
+                                      text: 'Services',
+                                      color: Colors.red,
+                                      duration: Duration(milliseconds: 200),
+                                      maxWidth: 30,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 24),
+                                    child: UnderlineAnimation(
+                                      textCubit: portfolioTextCubit,
+                                      text: 'Portfolio',
+                                      color: Colors.red,
+                                      duration: Duration(milliseconds: 200),
+                                      maxWidth: 30,
+                                    ),
+                                  ),
+                                  UnderlineAnimation(
+                                    textCubit: contactTextCubit,
+                                    text: 'Contact',
+                                    color: Colors.red,
+                                    duration: Duration(milliseconds: 200),
+                                    maxWidth: 30,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: const [
+                            Padding(
+                              padding:
+                                  EdgeInsets.only(right: 16, bottom: 8, top: 8),
+                              child: Icon(FontAwesomeIcons.discord),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(FontAwesomeIcons.reddit),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(FontAwesomeIcons.whatsapp),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(FontAwesomeIcons.github),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ]),
               ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 }
