@@ -9,8 +9,10 @@ class TabBarVisibilityCubit extends Cubit<bool> {
   changeVisibility() {
     if (state == false) {
       emit(true);
+      print('mostrou');
     } else {
       emit(false);
+      print('escondeu');
     }
   }
 }

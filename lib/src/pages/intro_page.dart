@@ -57,6 +57,11 @@ class _IntroPageState extends State<IntroPage>
                 return Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
+                      colorFilter: iconState is ThemeIconDark
+                          ? ColorFilter.mode(
+                              Color.fromRGBO(156, 109, 7, 1).withOpacity(0.3),
+                              BlendMode.darken)
+                          : ColorFilter.mode(Colors.lightBlue, BlendMode.color),
                       fit: BoxFit.cover,
                       image: iconState is ThemeIconDark
                           ? AssetImage('assets/images/branco.jpg')
@@ -65,7 +70,8 @@ class _IntroPageState extends State<IntroPage>
                   ),
                   child: Scaffold(
                     appBar: PreferredSize(
-                      preferredSize: const TabBar(
+                      preferredSize: TabBar(
+                        controller: tabController,
                         tabs: [],
                       ).preferredSize,
                       child: Align(
@@ -75,6 +81,7 @@ class _IntroPageState extends State<IntroPage>
                           child: Container(
                             width: MediaQuery.of(context).size.width / 2,
                             child: TabBar(
+                              isScrollable: false,
                               indicator:
                                   BoxDecoration(color: Colors.transparent),
                               indicatorColor: Colors.transparent,
@@ -89,14 +96,14 @@ class _IntroPageState extends State<IntroPage>
                                 Visibility(
                                   visible: tabState,
                                   child: GestureDetector(
-                                    onTap: () => {
-                                      tabController.animateTo(0),
-                                      if (tabState)
-                                        {
-                                          print('acabou'),
-                                          tabBarVisibilityCubit
-                                              .changeVisibility(),
-                                        }
+                                    onTap: () {
+                                      tabController.animateTo(0);
+                                      print('entrou ontap');
+                                      if (tabState) {
+                                        print('entrou esconder');
+                                        tabBarVisibilityCubit
+                                            .changeVisibility();
+                                      }
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.only(right: 24),
@@ -111,66 +118,81 @@ class _IntroPageState extends State<IntroPage>
                                     ),
                                   ),
                                 ),
-                                GestureDetector(
-                                  onTap: () => tabController.animateTo(1),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 24),
+                                Visibility(
+                                  visible: tabState,
+                                  child: GestureDetector(
+                                    onTap: () => tabController.animateTo(1),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 24),
+                                      child: UnderlineAnimation(
+                                        textCubit: aboutTextCubit,
+                                        text: 'About',
+                                        color: Colors.red,
+                                        duration: Duration(milliseconds: 200),
+                                        maxWidth: 30,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: tabState,
+                                  child: GestureDetector(
+                                    onTap: () => tabController.animateTo(2),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 24),
+                                      child: UnderlineAnimation(
+                                        textCubit: resumeTextCubit,
+                                        text: 'Resume',
+                                        color: Colors.red,
+                                        duration: Duration(milliseconds: 200),
+                                        maxWidth: 30,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: tabState,
+                                  child: GestureDetector(
+                                    onTap: () => tabController.animateTo(3),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 24),
+                                      child: UnderlineAnimation(
+                                        textCubit: servicesTextCubit,
+                                        text: 'Services',
+                                        color: Colors.red,
+                                        duration: Duration(milliseconds: 200),
+                                        maxWidth: 30,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: tabState,
+                                  child: GestureDetector(
+                                    onTap: () => tabController.animateTo(4),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 24),
+                                      child: UnderlineAnimation(
+                                        textCubit: portfolioTextCubit,
+                                        text: 'Portfolio',
+                                        color: Colors.red,
+                                        duration: Duration(milliseconds: 200),
+                                        maxWidth: 30,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: tabState,
+                                  child: GestureDetector(
+                                    onTap: () => tabController.animateTo(5),
                                     child: UnderlineAnimation(
-                                      textCubit: aboutTextCubit,
-                                      text: 'About',
+                                      textCubit: contactTextCubit,
+                                      text: 'Contact',
                                       color: Colors.red,
                                       duration: Duration(milliseconds: 200),
                                       maxWidth: 30,
                                     ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () => tabController.animateTo(2),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 24),
-                                    child: UnderlineAnimation(
-                                      textCubit: resumeTextCubit,
-                                      text: 'Resume',
-                                      color: Colors.red,
-                                      duration: Duration(milliseconds: 200),
-                                      maxWidth: 30,
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () => tabController.animateTo(3),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 24),
-                                    child: UnderlineAnimation(
-                                      textCubit: servicesTextCubit,
-                                      text: 'Services',
-                                      color: Colors.red,
-                                      duration: Duration(milliseconds: 200),
-                                      maxWidth: 30,
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () => tabController.animateTo(3),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 24),
-                                    child: UnderlineAnimation(
-                                      textCubit: portfolioTextCubit,
-                                      text: 'Portfolio',
-                                      color: Colors.red,
-                                      duration: Duration(milliseconds: 200),
-                                      maxWidth: 30,
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () => tabController.animateTo(4),
-                                  child: UnderlineAnimation(
-                                    textCubit: contactTextCubit,
-                                    text: 'Contact',
-                                    color: Colors.red,
-                                    duration: Duration(milliseconds: 200),
-                                    maxWidth: 30,
                                   ),
                                 ),
                                 IconButton(
@@ -229,11 +251,211 @@ class _IntroPageState extends State<IntroPage>
                                     portfolioTextCubit: portfolioTextCubit,
                                     contactTextCubit: contactTextCubit,
                                   ),
-                                  Container(),
-                                  Container(),
-                                  Container(),
-                                  Container(),
-                                  Container(),
+                                  Container(
+                                    color: Colors.black.withOpacity(0.3),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(24),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 20),
+                                                child: Text('ABOUT'),
+                                              ),
+                                              Container(
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .headline1!
+                                                    .color,
+                                                height: 2,
+                                                width: 150,
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  'LEARN MORE ABOUT ME',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: Theme.of(context)
+                                                        .textTheme
+                                                        .headline4!
+                                                        .fontSize,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 16),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 36),
+                                                    child: Container(
+                                                      height: 300,
+                                                      width: 300,
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                          colorFilter:
+                                                              ColorFilter.mode(
+                                                                  Colors.black
+                                                                      .withOpacity(
+                                                                          0.3),
+                                                                  BlendMode
+                                                                      .color),
+                                                          fit: BoxFit.cover,
+                                                          image: AssetImage(
+                                                              'assets/images/eu.png'),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  flex: 3,
+                                                  child: Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                vertical: 8),
+                                                        child: Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child: Text(
+                                                                'Software Developer & Tech Passionate',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .headline5!
+                                                                      .fontSize,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                vertical: 8),
+                                                        child: Row(
+                                                          children: const [
+                                                            Expanded(
+                                                              child: Text(
+                                                                  "As of 2020, I got to enter the software development field, through my university, and fell in love with everything about it. Now I want to improve myself to create smarter and better solutions."),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              ArrowTextWidget(
+                                                                  text1:
+                                                                      'Birthday: ',
+                                                                  text2:
+                                                                      '9 September 1994'),
+                                                              ArrowTextWidget(
+                                                                  text1:
+                                                                      'Linkedin Profile: ',
+                                                                  text2: ''),
+                                                              ArrowTextWidget(
+                                                                  text1:
+                                                                      'Phone: ',
+                                                                  text2:
+                                                                      '(62) 9 8234 1774'),
+                                                              ArrowTextWidget(
+                                                                  text1:
+                                                                      'City: ',
+                                                                  text2:
+                                                                      'Goiânia, Brazil'),
+                                                            ],
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 32),
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                ArrowTextWidget(
+                                                                    text1:
+                                                                        'Age: ',
+                                                                    text2:
+                                                                        '28'),
+                                                                ArrowTextWidget(
+                                                                    text1:
+                                                                        'Degree: ',
+                                                                    text2:
+                                                                        'Incomplete Graduation'),
+                                                                ArrowTextWidget(
+                                                                    text1:
+                                                                        'Email: ',
+                                                                    text2:
+                                                                        'adrianoanadinho@gmail.com'),
+                                                                ArrowTextWidget(
+                                                                    text1:
+                                                                        'Freelance: ',
+                                                                    text2:
+                                                                        'Unavailable'),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: [],
+                                                      )
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Center(child: Text('Resume page')),
+                                  ),
+                                  Container(
+                                    child: Center(child: Text('Services page')),
+                                  ),
+                                  Container(
+                                    child:
+                                        Center(child: Text('Portfolio page')),
+                                  ),
+                                  Container(
+                                    child: Center(child: Text('Contact page')),
+                                  ),
                                   Container(),
                                 ],
                               ),
@@ -249,6 +471,38 @@ class _IntroPageState extends State<IntroPage>
           },
         );
       },
+    );
+  }
+}
+
+class ArrowTextWidget extends StatelessWidget {
+  const ArrowTextWidget({
+    Key? key,
+    required this.text1,
+    required this.text2,
+  }) : super(key: key);
+
+  final String text1;
+  final String text2;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8, bottom: 8, right: 8),
+      child: Row(
+        children: [
+          Icon(
+            Icons.arrow_forward_ios,
+            size: 16,
+            color: Colors.green,
+          ),
+          Text(
+            text1,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text(text2)
+        ],
+      ),
     );
   }
 }
@@ -322,13 +576,6 @@ class HomePageWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     GestureDetector(
-                      onTap: () => {
-                        tabController.animateTo(0),
-                        if (tabController.index == 0 && tabState)
-                          {
-                            visibilityCubit.changeVisibility(),
-                          }
-                      },
                       child: Padding(
                         padding: const EdgeInsets.only(right: 24),
                         child: UnderlineAnimation(
@@ -361,7 +608,13 @@ class HomePageWidget extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => tabController.animateTo(2),
+                      onTap: () => {
+                        tabController.animateTo(2),
+                        if (tabController.index != 0 && !tabState)
+                          {
+                            visibilityCubit.changeVisibility(),
+                          }
+                      },
                       child: Padding(
                         padding: const EdgeInsets.only(right: 24),
                         child: UnderlineAnimation(
@@ -374,7 +627,13 @@ class HomePageWidget extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => tabController.animateTo(3),
+                      onTap: () => {
+                        tabController.animateTo(3),
+                        if (tabController.index != 0 && !tabState)
+                          {
+                            visibilityCubit.changeVisibility(),
+                          }
+                      },
                       child: Padding(
                         padding: const EdgeInsets.only(right: 24),
                         child: UnderlineAnimation(
@@ -387,7 +646,13 @@ class HomePageWidget extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => tabController.animateTo(3),
+                      onTap: () => {
+                        tabController.animateTo(4),
+                        if (tabController.index != 0 && !tabState)
+                          {
+                            visibilityCubit.changeVisibility(),
+                          }
+                      },
                       child: Padding(
                         padding: const EdgeInsets.only(right: 24),
                         child: UnderlineAnimation(
@@ -400,7 +665,13 @@ class HomePageWidget extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => tabController.animateTo(4),
+                      onTap: () => {
+                        tabController.animateTo(5),
+                        if (tabController.index != 0 && !tabState)
+                          {
+                            visibilityCubit.changeVisibility(),
+                          }
+                      },
                       child: UnderlineAnimation(
                         textCubit: contactTextCubit,
                         text: 'Contact',
@@ -433,7 +704,7 @@ class HomePageWidget extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Icon(FontAwesomeIcons.reddit),
+                child: Icon(FontAwesomeIcons.linkedin),
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
@@ -498,7 +769,7 @@ class UnderlineAnimation extends StatelessWidget {
                   fontSize: 16,
                   color: state
                       ? Theme.of(context).colorScheme.secondary
-                      : Theme.of(context).colorScheme.primary,
+                      : Theme.of(context).textTheme.headlineMedium!.color,
                 ),
               ),
             ],
